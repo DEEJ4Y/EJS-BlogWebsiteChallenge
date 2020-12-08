@@ -55,13 +55,19 @@ app.get("/posts/:postName", function (req, res) {
     if (_.kebabCase(postObj.title) === postName) {
       console.log("Match found");
       routeFound = true;
+
+      postTitle = postObj.title;
+      postContent = postObj.content;
     }
   });
   if (routeFound === false) {
-    console.log("404");
+    console.log("Couldn't find the requested post!");
   }
 
-  res.redirect("/");
+  res.render("post", {
+    postTitle: postTitle,
+    postContent: postContent,
+  });
 });
 
 app.listen(3000, function () {
