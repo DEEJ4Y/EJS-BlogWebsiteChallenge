@@ -49,7 +49,14 @@ app.post("/compose", function (req, res) {
 });
 
 app.get("/posts/:postName", function (req, res) {
-  console.log(req.params.postName);
+  let postName = req.params.postName;
+  posts.forEach(function (postObj) {
+    if (postObj.title === postName) {
+      console.log("Match found");
+    } else {
+      console.log("404");
+    }
+  });
   res.redirect("/");
 });
 
