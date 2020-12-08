@@ -52,8 +52,7 @@ app.get("/posts/:postName", function (req, res) {
 
   let routeFound = false;
   posts.forEach(function (postObj) {
-    if (_.kebabCase(postObj.title) === postName) {
-      console.log("Match found");
+    if (_.lowerCase(postObj.title) === postName) {
       routeFound = true;
 
       postTitle = postObj.title;
@@ -62,12 +61,13 @@ app.get("/posts/:postName", function (req, res) {
   });
   if (routeFound === false) {
     console.log("Couldn't find the requested post!");
+    res.redirect("/");
+  } else {
+    res.render("post", {
+      postTitle: postTitle,
+      postContent: postContent,
+    });
   }
-
-  res.render("post", {
-    postTitle: postTitle,
-    postContent: postContent,
-  });
 });
 
 app.listen(3000, function () {
