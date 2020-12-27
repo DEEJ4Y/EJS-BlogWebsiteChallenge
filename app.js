@@ -33,13 +33,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-  Blog.find({}, function (err, blogs) {
-    if (err) {
-      console.log(err);
-    } else {
-      posts = blogs;
-    }
-  });
   res.render("home", {
     homeStartingContent: homeStartingContent,
     posts: posts,
@@ -59,11 +52,12 @@ app.get("/compose", function (req, res) {
 });
 
 app.post("/compose", function (req, res) {
-  const post = {
+  const blog = new Blog({
     title: req.body.compositionTitle,
     content: req.body.compositionText,
-  };
-  posts.push(post);
+  });
+  blog.save();
+
   res.redirect("/");
 });
 
