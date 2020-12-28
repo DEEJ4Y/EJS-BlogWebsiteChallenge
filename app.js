@@ -39,11 +39,11 @@ app.get("/", function (req, res) {
     } else {
       posts = blogs;
       console.log(posts);
+      res.render("home", {
+        homeStartingContent: homeStartingContent,
+        posts: posts,
+      });
     }
-  });
-  res.render("home", {
-    homeStartingContent: homeStartingContent,
-    posts: posts,
   });
 });
 
@@ -64,17 +64,19 @@ app.post("/compose", function (req, res) {
     title: req.body.compositionTitle,
     content: req.body.compositionText,
   });
-  blog.save();
-
-  res.redirect("/");
+  blog.save(function (err) {
+    if (!err) {
+      res.redirect("/");
+    }
+  });
 });
 
-app.get("/posts/:postName", function (req, res) {
-  let postName = req.params.postName;
+app.get("/posts/:postId", function (req, res) {
+  let postId = req.params.postId;
 
   let routeFound = false;
   posts.forEach(function (postObj) {
-    if (_.lowerCase(postObj.title) === postName) {
+    if (postObj.id === postId) {
       routeFound = true;
 
       postTitle = postObj.title;

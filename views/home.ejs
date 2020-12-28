@@ -1,18 +1,26 @@
 <%- include("./partials/header.ejs"); -%>
 
-<h1>Home</h1>
-<p> <%= homeStartingContent %> </p>
+    <h1>Home</h1>
+    <p>
+        <%= homeStartingContent %>
+    </p>
 
-<% posts.forEach(function (post) { %>
+    <% posts.forEach(function (post) { %>
 
-<h1> <%= post.title %> </h1>
+        <h1>
+            <%= post.title %>
+        </h1>
 
-<% if(post.content.length > 100){ %>
-<p><%= post.content.substring(0, 100) %>...<a href="/posts/<%= post.title.toLowerCase() %> ">Read More</a></p>
-<% } else { %>
-<p><%= post.content %></p>
-<% } %>
+        <% if(post.content.length> 100){ %>
+            <p>
+                <%= post.content.substring(0, 100) %>...<a href="/posts/<%= post.id %> ">Read More</a>
+            </p>
+            <% } else { %>
+                <p>
+                    <%= post.content %>
+                </p>
+                <% } %>
 
-<% }); %>
+                    <% }); %>
 
-<%- include("./partials/footer.ejs") -%>
+                        <%- include("./partials/footer.ejs") -%>
